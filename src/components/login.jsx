@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import './Login.css';
 
 function Login() {
@@ -7,11 +8,39 @@ function Login() {
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Alert for debugging
     alert(`Email: ${email}\nPassword: ${password}`);
 
-    navigate('/DocumentPage');
+    try {
+      // Send POST request to the backend for login
+      const response = await axios.post('http://localhost:5000/api/auth/login', {
+        email,
+        password
+      });
+
+      // Store the token in localStorage (or sessionStorage)
+      localStorage.setItem('token', response.data.token);
+
+      
+      // Retrieve the token from localStorage
+      const token = localStorage.getItem('token');
+
+      // Log the token to the console
+      console.log('Saved Token:', token);
+
+      // Alert for successful login
+      alert('Login successful!');
+      
+      // Navigate to the DocumentPage or Dashboard
+      navigate('/DocumentPage');
+    } catch (error) {
+      console.error('Login error:', error);
+      alert('Invalid credentials. Please try again.');
+    }
   };
 
   return (

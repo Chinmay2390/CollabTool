@@ -5,6 +5,8 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Login from "./components/login";
 import Register from "./components/register";
 import Home from "./components/Home";
+import DocumentPage from './components/DocumentPage';
+import NotFoundPage from './components/NotFoundPage';
 
 function App() {
   return (
@@ -23,6 +25,8 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/DocumentPage" element={<DocumentPage />} /> {/* Route for DocumentPage */}
+            <Route path="*" element={<NotFoundPage />} /> {/* Optional 404 page */}
           </Routes>
         </main>
       </header>

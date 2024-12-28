@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import './Register.css';
 
 function Register() {
@@ -6,10 +7,36 @@ function Register() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSubmit = (e) => {
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   alert(`Username: ${username}\nEmail: ${email}\nPassword: ${password}`);
+  // };
+  
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Alert for debugging
     alert(`Username: ${username}\nEmail: ${email}\nPassword: ${password}`);
+
+    try {
+      // Send POST request to the backend for registration
+      const response = await axios.post('http://localhost:5000/api/auth/register', {
+        username,
+        email,
+        password
+      });
+
+      // Alert for successful registration
+      alert('Registration successful! Please log in.');
+      
+      // Optionally, navigate to login page after successful registration
+      // navigate('/login');
+    } catch (error) {
+      console.error('Registration error:', error);
+      alert('Error occurred while registering. Please try again.');
+    }
   };
+
 
   return (
     <div className="register-container">
